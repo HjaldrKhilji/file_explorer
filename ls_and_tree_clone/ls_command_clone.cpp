@@ -1,4 +1,5 @@
 #include <iostream>
+//error checking and memory management must be done by the caller, along with anything else added for additional redundency 
 namespace posix{
 extern "C"{
     #include <dirent.h>
