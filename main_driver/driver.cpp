@@ -33,15 +33,22 @@ export namespace driver{
             searcher_list.push_back(searcher_element_t{fd});
             fchdir(fd);
         }
-        inline void output_search_and_discard_data_through_storage(){
-            searcher_list.output_search_and_discard_data_through_storage();
+        inline void output_search(){
+            searcher_list.output_search();
         }
-        inline void output_search_and_discard_data_inside_current_dir(){
-            storage_for_driver::output_search_and_discard_data_inside_current_dir();
+        inline void output_search_inside_current_dir(){
+            storage_for_driver::output_search_inside_current_dir();
+        }
+        inline void output_search_while_checking_errors(){
+            searcher_list.output_search_while_checking_errors();
+        }
+        inline void output_search_inside_current_dir_while_checking_errors(){
+            storage_for_driver::output_search_inside_current_dir_while_checking_errors();
         }
         inline void change_an_entry(search_size_t index, searcher_element_t a){
             searcher_list[index]=a;
         }
+
 
     private:
         using searcher_element_t= storage_for_driver::dynamic_searcher_list::value_type;
