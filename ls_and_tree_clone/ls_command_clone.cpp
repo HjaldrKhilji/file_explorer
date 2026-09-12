@@ -55,8 +55,11 @@ export namespace list_filter_and_format {
             result.lenght=scandirat(directory_fd, path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
             return result;
         }
+        inline ~searcher(){
+            close(directory_fd);
+        }
     private:
-        int directory_fd;//this is a none owning file descriptor, meaning, this module dosent own it
+        int directory_fd;
 
 
     };
