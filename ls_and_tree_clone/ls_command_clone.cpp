@@ -2,6 +2,7 @@
 #include<string>
 #include<array>
 //error checking and memory management must be done by the caller, along with anything else that must be added for additional redundency
+//tree must be implemented in some other file and it would probably require a different file, where it tries to make use of practically, the whole project
 namespace posix{
     extern "C"{
         #include <dirent.h>
