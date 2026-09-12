@@ -29,7 +29,7 @@ export namespace storage_for_driver{
                 //print content and done
             }
         }
-        inline void output_search_inside_current_dir(){
+        inline void output_search_inside_current_dir_while_checking_errors(){
             for(auto dir : storage){
                 content_t temp= dir.list_content_while_checking_errors();
                 //print content and done
