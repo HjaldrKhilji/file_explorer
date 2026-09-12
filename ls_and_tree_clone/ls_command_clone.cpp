@@ -17,13 +17,14 @@ namespace posix{
     int total_no_op_order(const struct dirent **,const struct dirent **) {
         return -1;
     }
+
+}
+export module list_filter_and_format
+export namespace list_filter_and_format {
     struct directory_content_t{
         dirent **restrict dir_list;
         std::size_t lenght;
     };
-}
-export module list_filter_and_format
-export namespace list_filter_and_format {
     directory_content_t list_dirs(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
         directory_content_t result;
         result.lenght=scandir(path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
