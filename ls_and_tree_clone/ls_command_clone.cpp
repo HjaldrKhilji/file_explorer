@@ -1,8 +1,7 @@
 #include <iostream>
 #include<string>
 #include<array>
-//error checking and memory management must be done by the caller, along with anything else that must be added for additional redundency
-//tree must be implemented in some other file and it would probably require a different file, where it tries to make use of practically, the whole project
+//tree must be implemented in some other file and it would probably require a different file, where it tries to make use of the whole project in order to accomplish the desired task
 namespace posix{
     extern "C"{
         #include <dirent.h>
@@ -24,8 +23,19 @@ export namespace list_filter_and_format {
     struct directory_content_t{
         dirent **restrict dir_list;
         std::size_t lenght;
+        directory_content_t(directory_content_t&&)=default;
+        void operator=(directory_content_t&&)=default;
+        //for simplicity, no copying because none is needed
+        void print_content(std::ostream){
+            //todo
+        }
+        ~directory_content_t(){
+        for(int i=0; i<content.lenght; i++){
+            free(content.dir_list[i]);
+        }
+        }
     };
-    directory_content_t list_dirs(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
+    directory_content_t list_content(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
         directory_content_t result;
         result.lenght=scandir(path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
         return result;
@@ -40,7 +50,7 @@ export namespace list_filter_and_format {
         driver(std::string path_name){
             fd= open(path_name.c_str(), O_DIRECTORY);
         }
-        directory_content_t list_dirs(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
+        directory_content_t list_content(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
             directory_content_t result;
             result.lenght=scandirat(directory_fd, path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
             return result;
