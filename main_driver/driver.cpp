@@ -1,15 +1,7 @@
 #include <iostream>
 #include<string>
-namespace posix{
-    extern "C"{
-        #include <unistd.h>
-        #include <dirent.h>
-        #include <fcntl.h>
-    }
-}
 import list_filter_and_format;
 import storage_for_driver;
-
 export module driver;
 export namespace driver{
     class Driver{
@@ -33,17 +25,17 @@ export namespace driver{
             searcher_list.push_back(searcher_element_t{fd});
             fchdir(fd);
         }
-        inline void output_search(){
-            searcher_list.output_search();
+        inline void output_search(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, formated_data& format){
+            searcher_list.output_search(path, index_for_filter,  index_for_ordering,with_custom_format, format);
         }
-        inline void output_search_inside_current_dir(){
-            storage_for_driver::output_search_inside_current_dir();
+        inline void output_search_inside_current_dir(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, formated_data& format){
+            storage_for_driver::output_search_inside_current_dir(path, index_for_filter,  index_for_ordering,with_custom_format, format);
         }
-        inline void output_search_while_checking_errors(){
-            searcher_list.output_search_while_checking_errors();
+        inline void output_search_while_checking_errors(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, formated_data& format){
+            searcher_list.output_search_while_checking_errors(path, index_for_filter,  index_for_ordering,with_custom_format, format);
         }
-        inline void output_search_inside_current_dir_while_checking_errors(){
-            storage_for_driver::output_search_inside_current_dir_while_checking_errors();
+        inline void output_search_inside_current_dir_while_checking_errors(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, formated_data& format){
+            storage_for_driver::output_search_inside_current_dir_while_checking_errors(path, index_for_filter,  index_for_ordering,with_custom_format, format);
         }
         inline void change_an_entry(search_size_t index, searcher_element_t a){
             searcher_list[index]=a;
