@@ -22,26 +22,28 @@ namespace posix{
     }
 
 }
+import print_content
 export module list_filter_and_format
 export namespace list_filter_and_format {
     struct directory_content_t{
-        dirent **restrict dir_list;
+        posix::dirent **restrict dir_list;
         std::size_t lenght;
         inline directory_content_t(directory_content_t&&)=default;
         inline void operator=(directory_content_t&&)=default;
         //for simplicity, no copying because none is needed
-        inline void print_content(std::ostream){
-            //todo
+        inline void print_content(posix:dirent* data_to_print, bool with_custom_format, formated_data& format){
+            print_content::print_content(data_to_print, with_custom_format, format);
         }
         inline ~directory_content_t(){
         for(int i=0; i<content.lenght; i++){
             free(content.dir_list[i]);
         }
         }
+
     };
 inline directory_content_t list_content(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
         directory_content_t result;
-        result.lenght=scandir(path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
+        result.lenght=posix::scandir(path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
         return result;
     }
 inline directory_content_t list_content_while_checking_errors(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
@@ -63,14 +65,14 @@ class searcher{
         directory_fd=d;
         }
         inline driver(std::string path_name){
-            fd= open(path_name.c_str(), O_DIRECTORY);
+            fd= posix::open(path_name.c_str(), O_DIRECTORY);
         }
-        inline directory_content_t list_content(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
+        inline directory_content_t list_content(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, formated_data& format){
             directory_content_t result;
-            result.lenght=scandirat(directory_fd, path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
+            result.lenght=posix::scandirat(directory_fd, path.c_str(), &result.dir_list, filter_list[index_for_filter], ordering_list[index_for_ordering]);
             return result;
         }
-        inline directory_content_t list_content_while_checking_errors(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering){
+        inline directory_content_t list_content_while_checking_errors(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, formated_data& format){
             directory_content_t result = list_content(path, index_for_filter, index_for_ordering);
             if(result==-1){
                 const std::error_condition econd =
