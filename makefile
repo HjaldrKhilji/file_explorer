@@ -11,7 +11,7 @@ BASE=/HDD_partitions/personal_files/Projects/file_explorer
 DRIVER=$(BASE)/main_driver
 CLONE=$(BASE)/ls_and_tree_clone
 CLONE_EXTENSION=$(CLONE)/extending_this_module
-#displaying files explicitly to mantain order
+#specifying files explicitly to mantain order so that the build order remains correct
 SOURCE=$(CLONE_EXTENSION)/print_content.cpp $(CLONE)/ls_command_clone.cpp $(CLONE_EXTENSION)/middle_man.cpp $(DRIVER)/driver.cpp
 #Object file target
 OBJS = $(SOURCE:.cpp=.o)
@@ -46,5 +46,4 @@ clean:
       	rm -f $(OBJS) $(TARGET)
 #clean to only remove build residue
 clean:
-      	rm -f $(OBJS)
-
+      	rm -f $(OBJS) 
