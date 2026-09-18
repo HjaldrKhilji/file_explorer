@@ -45,5 +45,7 @@ build:
 clean:
       	rm -f $(OBJS) $(TARGET)
 #clean to only remove build residue
-clean:
-      	rm -f $(OBJS) 
+clean_residue:
+	rm -f $(OBJS) 
+
+
