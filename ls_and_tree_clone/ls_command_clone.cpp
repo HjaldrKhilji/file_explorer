@@ -30,8 +30,10 @@ export namespace list_filter_and_format {
         constexpr inline directory_content_t(directory_content_t&&)=default;
         constexpr inline directory_content_t& operator=(directory_content_t&&)=default;
         //for simplicity, no copying because none is needed
-        inline void print_content(posix::dirent* data_to_print, bool with_custom_format, print_content::formated_data& format){
-            print_content::print_content_impl(data_to_print, with_custom_format, format);
+        inline void print_content(bool with_custom_format, print_content::formated_data& format){
+              for(int i=0; i<lenght; i++){
+                print_content::print_content_impl(dir_list[i], with_custom_format, format);
+              }
         }
         inline ~directory_content_t(){
         for(int i=0; i<lenght; i++){
