@@ -18,13 +18,21 @@ export namespace storage_for_driver{
     using storage_t=std::vector<list_filter_and_format::searcher>;
 
     class dynamic_searcher_list: public storage_t{
-        inline void output_search_inside_current_dir(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, print_content::formated_data& format){
+    public:
+        inline dynamic_searcher_list()=default;
+        inline dynamic_searcher_list(std::vector<std::string> search_paths){
+            auto back_it= std::back_insert_iterator<storage_t>(*this);
+            for(auto x: search_paths){
+                *back_it= list_filter_and_format::searcher{x};
+            }
+        }
+        inline void output_search(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, print_content::formated_data& format){
             for(auto dir : *this){
                 content_t temp= dir.list_content(path, index_for_filter,  index_for_ordering);
                 temp.print_content(with_custom_format, format);
             }
         }
-        inline void output_search_inside_current_dir_while_checking_errors(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, print_content::formated_data& format){
+        inline void output_search_while_checking_errors(std::string path, std::size_t index_for_filter, std::size_t index_for_ordering,bool with_custom_format, print_content::formated_data& format){
             for(auto dir : *this){
                 content_t temp= dir.list_content_while_checking_errors(path, index_for_filter,  index_for_ordering);
                 temp.print_content(with_custom_format, format);
